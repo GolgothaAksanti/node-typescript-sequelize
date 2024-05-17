@@ -34,7 +34,13 @@ const transports = [
 const logger = winston.createLogger({
   level: 'info',
   levels,
-  format: winston.format.json(),
+  format: winston.format.combine(
+    winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+    winston.format.printf(({ timestamp, level, message }) => {
+      return `${timestamp} ${level}: ${message}`;
+    }),
+    winston.format.json()
+  ),
   transports,
 });
 
@@ -43,7 +49,9 @@ if (process.env.NODE_ENV !== 'production') {
     new winston.transports.Console({
       format: winston.format.combine(
         winston.format.colorize(),
-        winston.format.simple()
+        winston.format.printf(({ level, message }) => {
+          return `${level}: ${message}`;
+        })
       ),
     })
   );
