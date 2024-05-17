@@ -1,7 +1,11 @@
 import { Response } from 'express';
+
 import Service from '@src/database/services';
+import logger from '../utils/logger';
 
 class Base {
+  protected Logger = logger;
+
   protected Service = Service;
 
   protected INTERNAL_SERVER_ERROR_CODE = 500;

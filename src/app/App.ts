@@ -2,11 +2,10 @@ import express, { Application, Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 
-import { IRoute } from '@src/types/App';
-import logger, { httpLogStream } from '@src/core/utils/logger';
-import port from '@src/core/utils/port';
-import { db } from '@src/database/models';
 import Base from '@src/core/base/Base';
+import { IRoute } from '@src/types/App';
+import { httpLogStream } from '@src/core/utils/logger';
+import Util from '@src/core/utils';
 
 class App extends Base {
   public app: Application;
@@ -17,7 +16,6 @@ class App extends Base {
     this.initMiddlewares();
     this.initRoutes(routes);
     this.initDefaultRoutes();
-    // this.createUser();
   }
 
   private initMiddlewares(): void {
@@ -25,15 +23,6 @@ class App extends Base {
     this.app.use(bodyParser.urlencoded({ extended: false, limit: '500mb' }));
     this.app.use(morgan('dev'));
     this.app.use(morgan('combined', { stream: httpLogStream }));
-  }
-
-  private async createUser() {
-    const user = await db.User.create({
-      username: 'JohnDoe',
-      email: 'john@example.com',
-    });
-
-    console.log(user);
   }
 
   private initRoutes(routes: IRoute[]): void {
@@ -56,13 +45,14 @@ class App extends Base {
     });
 
     this.app.use('*', (req: Request, res: Response) => {
+      Util.logger.error(this.INVALID_ROUTE);
       return this.responseHandler(res, this.NOT_FOUND_CODE, this.INVALID_ROUTE);
     });
   }
 
   listen(): void {
-    this.app.listen(port, () => {
-      logger.info(this.listening(port));
+    this.app.listen(Util.port, () => {
+      Util.logger.info(this.listening(Util.port));
     });
   }
 
