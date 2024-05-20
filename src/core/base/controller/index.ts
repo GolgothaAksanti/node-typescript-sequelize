@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import Base from '@src/core/base/Base';
 import { TResponse } from '@src/types/App';
 
-abstract class BaseModule extends Base {
+abstract class BaseController extends Base {
   protected created(res: Response, data: any): Response {
     return this.success(res, this.CREATED_CODE, this.CREATED_MSG, data);
   }
@@ -31,4 +31,4 @@ abstract class BaseModule extends Base {
   }
 }
 
-export default BaseModule;
+export default BaseController;

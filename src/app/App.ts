@@ -3,9 +3,9 @@ import bodyParser from 'body-parser';
 import morgan from 'morgan';
 
 import Base from '@src/core/base/Base';
+import Util from '@src/core/utils';
 import { IRoute } from '@src/types/App';
 import { httpLogStream } from '@src/core/utils/logger';
-import Util from '@src/core/utils';
 
 class App extends Base {
   public app: Application;
