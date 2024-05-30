@@ -72,7 +72,7 @@ abstract class BaseMiddleware extends Base implements IJoiError {
     try {
       return await this.middleware(req, res, next);
     } catch (error: unknown) {
-      console.log(error);
+      // console.log(error);
       return null;
     }
   }

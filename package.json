@@ -6,7 +6,14 @@
   "scripts": {
     "test": "jest",
     "dev": "nodemon",
-    "db:create": "npx sequelize-cli db:create"
+    "db:create": "npx sequelize db:create",
+    "db:drop": "npx sequelize db:drop",
+    "db:migrate": "npx sequelize db:migrate",
+    "db:reset": "pnpm db:drop & pnpm db:create & pnpm db:migrate",
+    "db:create:test": "env NODE_ENV=test pnpm db:create",
+    "db:migrate:test": "env NODE_ENV=test pnpm db:migrate",
+    "db:drop:test": "env NODE_ENV=test pnpm db:drop",
+    "db:reset:test": "env NODE_ENV=test npx sequelize db:drop & npx sequelize db:create & npx sequelize db:migrate"
   },
   "keywords": [],
   "author": "",

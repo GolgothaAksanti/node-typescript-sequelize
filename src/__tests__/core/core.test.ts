@@ -1,4 +1,5 @@
 import request from 'supertest';
+
 import { appTest } from '@src/__mocks__/variables.mock';
 
 describe('Core tests', () => {
@@ -14,8 +15,8 @@ describe('Core tests', () => {
     expect(res.body.message).toBe('Invalid method');
   });
 
-  it('Should return Invalid method', async () => {
-    const res = await request(appTest).get('/invalid');
+  it('Should return Invalid route', async () => {
+    const res = await request(appTest).get('/somwthing');
     expect(res.statusCode).toBe(404);
     expect(res.body.message).toBe('Invalid route');
   });

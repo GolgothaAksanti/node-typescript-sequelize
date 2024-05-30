@@ -27,7 +27,7 @@ abstract class BaseService {
     try {
       return await this.transaction(data);
     } catch (err: unknown) {
-      console.log(err);
+      // console.log(err);
       return null;
     }
   }

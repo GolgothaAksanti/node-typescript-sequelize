@@ -4,7 +4,10 @@ import BaseController from '@src/core/base/controller';
 import { UserAttributes } from '@src/database/models/User';
 
 class CreateUserController extends BaseController {
-  protected async module(req: Request, res: Response): Promise<void | any> {
+  protected async module(
+    req: Request<any, any, UserAttributes>,
+    res: Response
+  ): Promise<void | any> {
     const body: UserAttributes = req.body;
 
     console.log({ body });
