@@ -1,0 +1,61 @@
+name: pipeline
+
+on:
+  push:
+    branches: [develop]
+  pull_request:
+    branches: [develop]
+    types: [opened, synchronize, reopened, edited]
+
+jobs:
+  Github-actions:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "The Job is automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "This job now running on a ${{ runner.os }} server hosted by Github!"
+      - run: echo "The name of the branch is ${{ github.ref }} and the repository is ${{ github.repository }}"
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - run: echo "The ${{ github.repository }} has been cloned to the runner."
+      - run: echo "The workflow is now ready to test the code on the runner."
+      - name: List files in the repository
+        run: |
+          ls ${{github.workspace}}
+      - run: echo "This job's status is ${{ job.status }}. congrat ${{secrets.MY_NAME}}"
+
+  # build:
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - name: Shutdown Ubuntu MySQL (SUDO)
+  #       run: sudo service mysql stop
+  #     - name: Use Node.js ${{ matrix.node-version }}
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: '16.x'
+  #     - name: Set up MySQL 5.7
+  #       uses: mirromutth/mysql-action@master
+  #       with:
+  #         mysql version: 5.7
+  #         mysql database: ${{ secrets.DB_NAME_TEST }}
+  #         mysql root password: ${{ secrets.DB_PASSWORD_TEST }}
+  #     - name: npm install, build, and test
+  #       run: |
+  #         npm install
+  #         npm run lint:fix
+  #         npm run lint
+  #         npm run db:migrate:test && npm run db:seed:test
+  #         npm test -- --password=${{secrets.DB_PASSWORD_TEST}}
+  #       env:
+  #         NODE_ENV: test
+  #         CI: true
+  #         JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
+  #         DB_USERNAME_TEST: ${{ secrets.DB_USERNAME_TEST }}
+  #         DB_PASSWORD_TEST: ${{ secrets.DB_PASSWORD_TEST }}
+  #         DB_NAME_TEST: ${{ secrets.DB_NAME_TEST }}
+  #         DB_HOST_TEST: ${{ secrets.DB_HOST_TEST }}
+  #         TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
+  #         TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+  #         TWILIO_SERVICE_ID: ${{ secrets.TWILIO_SERVICE_ID }}
+  #         TWILIO_CHANEL: ${{ secrets.TWILIO_CHANEL }}
