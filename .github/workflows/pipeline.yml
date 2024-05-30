@@ -26,32 +26,101 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      mysql:
+        image: mysql:8.0
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_DATABASE: ${{ secrets.DB_TEST_NAME }}
+         # MYSQL_DATABASE: "test_db"
+          MYSQL_USER: root
+          #MYSQL_PASSWORD: golgotha
+          #MYSQL_USER: ${{ secrets.DB_TEST_USER }}
+          #MYSQL_USER: my_user
+          #MYSQL_PASSWORD: ${{ secrets.DB_TEST_PASSWORD }}
+          #MYSQL_ROOT_PASSWORD: ${{ secrets.DB_TEST_PASSWORD }}
+          MYSQL_ROOT_PASSWORD: "golgotha"
+          options: >- 
+            --name=mysql
+            --health-cmd="mysqladmin ping --silent" 
+            --health-interval=10s 
+            --health-timeout=5s 
+            --health-retries=3
+
     steps:
-      - uses: actions/checkout@v3
-      - name: Shutdown Ubuntu MySQL (SUDO)
-        run: sudo service mysql stop
+      - name: checkout repository
+        uses: actions/checkout@v3
+      # - name: Shutdown Ubuntu MySQL (SUDO)
+        # run: sudo service mysql stop
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
-      - name: Set up MySQL 5.7
-        uses: mirromutth/mysql-action@master
+          node-version: '18.x'
+
+      # - name: Set up MySQL 5.7
+      #   uses: mirromutth/mysql-action@master
+      #   with:
+      #     mysql version: 5.7
+      #     # mysql database: ${{ secrets.DB_TEST_NAME }}
+      #     mysql database: test_db
+      #     mysql root password: golgotha
+      #     # mysql root password: ${{ secrets.DB_TEST_PASSWORD }}
+
+      - name: setup pnpm
+        uses: pnpm/action-setup@v3
         with:
-          mysql version: 5.7
-          mysql database: ${{ secrets.DB_TEST_NAME }}
-          mysql root password: ${{ secrets.DB_TEST_PASSWORD }}
-      - name: npm install, build, and test
-        run: |
-          npm install
-          npm run lint:fix
-          npm run lint
-          npm run db:migrate:test
-          npm test -- --password=${{secrets.DB_TEST_PASSWORD}}
+          version: 9
+
+      - name: pnpm install
+        run: pnpm install
+
+      # - name: Wait for MySQL
+      #   run: |
+      #     while ! mysqladmin ping -h"127.0.0.1" --silent; do
+      #       echo "Waiting for MySQL..."
+      #       sleep 1
+      #     done
+
+      # - name: db drop
+      #   run: pnpm db:drop:test
+        # env:
+        #   DBURL: 'localhost:3306'
+        #   JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
+        #   PORT: ${{ secrets.PORT }}
+        #   DB_TEST_NAME: ${{ secrets.DB_TEST_NAME }}
+        #   DB_TEST_USER: ${{ secrets.DB_TEST_USER }}
+        #   DB_TEST_PASSWORD: ${{ secrets.DB_TEST_PASSWORD }}
+        #   DB_TEST_HOST: ${{ secrets.DB_TEST_HOST }}
+
+      # - name: db create
+      #   run: pnpm db:create:test
+
+      - name: run migrate
+        run: pnpm db:migrate:test
+
+      - name: run test
+        run: pnpm test -- --password="golgotha"
         env:
+          DBURL: "localhost:3306"
           NODE_ENV: test
           CI: true
-          JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
-          PORT: ${{ secrets.PORT }}
-          DB_TEST_NAME: ${{ secrets.DB_TEST_NAME }}
-          DB_TEST_PASSWORD: ${{ secrets.DB_TEST_PASSWORD }}
-          DB_TEST_HOST: ${{ secrets.DB_TEST_HOST }}I
+          JWT_SECRET_KEY: "jwt_tokenf[cmsdlnsvljsvlksdjvlkdvs;dsce3ir902r982rir]"
+          PORT: 4001
+          DB_TEST_NAME: "test_db"
+          DB_TEST_USER: "root"
+          DB_TEST_PASSWORD: "golgotha"
+          DB_TEST_HOST: "localhost"
+          DB_HOST: "localhost" 
+          DB_USER: "root" 
+          DB_PASSWORD: "golgotha"
+          DB_NAME: "dev_db"
+          DB_PORT: 3306
+
+          # JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
+          # PORT: ${{ secrets.PORT }}
+          # DB_TEST_NAME: ${{ secrets.DB_TEST_NAME }}
+          # DB_TEST_USER: ${{ secrets.DB_TEST_USER }}
+          # DB_TEST_PASSWORD: ${{ secrets.DB_TEST_PASSWORD }}
+          # DB_TEST_HOST: ${{ secrets.DB_TEST_HOST }}
