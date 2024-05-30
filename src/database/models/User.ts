@@ -3,7 +3,7 @@ import { CreationOptional, DataTypes, Model, Optional } from 'sequelize';
 import { sequelize } from '../system/db';
 
 export interface UserAttributes {
-  userId: string;
+  userId?: string;
   username: string;
   fullname: string;
   email: string;

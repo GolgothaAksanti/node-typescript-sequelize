@@ -25,7 +25,7 @@ abstract class BaseController extends Base {
     try {
       return await this.module(req, res);
     } catch (err: unknown) {
-      console.log(err);
+      // console.log(err);
       return null;
     }
   }
