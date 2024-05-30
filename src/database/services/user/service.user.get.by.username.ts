@@ -1,10 +1,10 @@
 import { db } from '@src/database/models';
 import BaseService from '@src/database/system/base';
 
-class GetUserByIdService extends BaseService {
-  protected async transaction(userId: string): Promise<any> {
+class GetUserByUsernameService extends BaseService {
+  protected async transaction(username: string): Promise<any> {
     const user = await db.User.findOne({
-      where: { userId },
+      where: { username },
       raw: true,
     });
 
@@ -14,4 +14,4 @@ class GetUserByIdService extends BaseService {
   }
 }
 
-export default GetUserByIdService;
+export default GetUserByUsernameService;

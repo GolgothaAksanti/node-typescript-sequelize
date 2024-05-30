@@ -6,7 +6,7 @@ import { IPage, IPagination } from '@src/types/db';
 const { Password } = Util;
 
 abstract class BaseService {
-  protected database: any;
+  protected database
 
   protected op: typeof Op;
   protected sequelize: typeof Sequelize;
@@ -21,9 +21,9 @@ abstract class BaseService {
     this.queryTypes = QueryTypes;
   }
 
-  protected abstract transaction<T>(data?: T): Promise<void | any>;
+  protected abstract transaction(data?: any): Promise<void | any>;
 
-  public async call<T>(data?: T): Promise<void | any> {
+  public async call<T>(data?: any): Promise<void | any> {
     try {
       return await this.transaction(data);
     } catch (err: unknown) {

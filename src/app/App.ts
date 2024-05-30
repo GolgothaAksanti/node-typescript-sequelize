@@ -19,8 +19,10 @@ class App extends Base {
   }
 
   private initMiddlewares(): void {
-    this.app.use(bodyParser.json({ limit: '500mb' }));
-    this.app.use(bodyParser.urlencoded({ extended: false, limit: '500mb' }));
+    this.app.use(express.json());
+    this.app.use(express.urlencoded({ extended: true }));
+    // this.app.use(bodyParser.json());
+    // this.app.use(bodyParser.urlencoded({ extended: false, limit: '500mb' }));
     this.app.use(morgan('dev'));
     this.app.use(morgan('combined', { stream: httpLogStream }));
   }
