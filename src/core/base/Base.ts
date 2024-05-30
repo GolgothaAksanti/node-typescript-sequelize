@@ -42,17 +42,12 @@ class Base {
 
   protected EMAIL_VERIFICATION_LIMIT_REACHED =
     'we are unable to verify your email at this time. Please Try again later';
-
   protected EMAIL_ALREADY_VERIFIED_MSG =
     'This email address has been verified already. Try to login instead';
-
   protected NOT_FOUND_MSG = 'resource not found';
-
-  protected JOB_POSITION_NOT_FOUND = 'job position not found';
-
+  protected ALREADY_EXIT_MSG = 'already exists';
+  protected USERNAME_ALREADY_EXIT_MSG = 'username already exists';
   protected EMAIL_ALREADY_EXIT_MSG = 'email already exists';
-
-  protected PHONENUMBER_ALREADY_EXIT_MSG = 'phone number already exists';
 
   protected REVERIFICATION_EMAIL =
     'please check your email to complete the re-verification process';

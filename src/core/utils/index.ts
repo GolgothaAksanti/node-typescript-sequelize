@@ -1,20 +1,18 @@
-// import TokenUtils from '@src/core/utils/token';
-// import deleteProps from '@src/core/utils/deleteProps';
+import TokenUtils from '@src/core/utils/token';
+import removeProperties from './remove.properties';
 import PasswordUtils from '@src/core/utils/password';
 import logger from '@src/core/utils/logger';
 import port from '@src/core/utils/port';
-// import countries from '@src/core/utils/countries';
 
-// const Token = new TokenUtils();
+const Token = new TokenUtils();
 const Password = new PasswordUtils();
 
 const Util = {
-//   Token,
-//   deleteProps,
+  Token,
   Password,
   logger,
   port,
-//   countries,
+  removeProperties,
 };
 
 export default Util;

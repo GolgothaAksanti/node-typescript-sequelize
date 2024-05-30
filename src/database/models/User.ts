@@ -1,35 +1,47 @@
-import { DataTypes, Model, Optional } from 'sequelize';
+import { CreationOptional, DataTypes, Model, Optional } from 'sequelize';
 
 import { sequelize } from '../system/db';
 
-interface UserAttributes {
+export interface UserAttributes {
   userId: string;
   username: string;
+  fullname: string;
   email: string;
+  password?: string;
+  active?: number;
+  status?: number;
+  is_verified?: number;
+  salt?: string;
   createdAt?: Date;
   updatedAt?: Date;
 }
 
-interface UserCreationAttributes extends Optional<UserAttributes, 'userId'> {}
+export interface UserCreationAttributes
+  extends Optional<UserAttributes, 'userId'> {}
 
 class User
   extends Model<UserAttributes, UserCreationAttributes>
   implements UserAttributes
 {
-  public userId!: string;
-  public username!: string;
-  public email!: string;
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
-}
+  declare userId: CreationOptional<string>;
+  declare username: string;
+  declare fullname: string;
+  declare email: string;
+  declare password: CreationOptional<string>;
+  declare active: CreationOptional<number>;
+  declare is_verified: CreationOptional<number>;
+  declare status: CreationOptional<number>;
+  declare salt: string;
+  declare readonly createdAt: CreationOptional<Date>;
+  declare readonly updatedAt: CreationOptional<Date>;
 
-// class User extends Model {
-//   public userId!: number;
-//   public username!: string;
-//   public email!: string;
-//   public readonly createdAt!: Date;
-//   public readonly updatedAt!: Date;
-// }
+  public toJSON(): Partial<UserAttributes> {
+    const values = Object.assign({}, this.get());
+    delete values.password;
+    delete values.salt;
+    return values;
+  }
+}
 
 User.init(
   {
@@ -42,10 +54,37 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    fullname: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    salt: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    active: {
+      type: DataTypes.TINYINT(),
+      allowNull: false,
+      defaultValue: 1,
+    },
+    status: {
+      type: DataTypes.TINYINT(),
+      allowNull: false,
+      defaultValue: 1,
+    },
+    is_verified: {
+      type: DataTypes.TINYINT(),
+      allowNull: false,
+      defaultValue: 0,
     },
     createdAt: {
       type: DataTypes.DATE,

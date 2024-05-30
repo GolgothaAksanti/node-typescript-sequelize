@@ -3,9 +3,9 @@ import bodyParser from 'body-parser';
 import morgan from 'morgan';
 
 import Base from '@src/core/base/Base';
+import Util from '@src/core/utils';
 import { IRoute } from '@src/types/App';
 import { httpLogStream } from '@src/core/utils/logger';
-import Util from '@src/core/utils';
 
 class App extends Base {
   public app: Application;
@@ -19,8 +19,10 @@ class App extends Base {
   }
 
   private initMiddlewares(): void {
-    this.app.use(bodyParser.json({ limit: '500mb' }));
-    this.app.use(bodyParser.urlencoded({ extended: false, limit: '500mb' }));
+    this.app.use(express.json());
+    this.app.use(express.urlencoded({ extended: true }));
+    // this.app.use(bodyParser.json());
+    // this.app.use(bodyParser.urlencoded({ extended: false, limit: '500mb' }));
     this.app.use(morgan('dev'));
     this.app.use(morgan('combined', { stream: httpLogStream }));
   }
