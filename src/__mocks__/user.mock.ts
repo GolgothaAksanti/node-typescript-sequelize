@@ -7,7 +7,23 @@ export const userSignupData: UserAttributes = {
   email: 'gol111@gmail.com',
   password: '00000000',
 };
+
 export const userSigninData: IUserSignin = {
   login: 'gola',
   password: '00000000',
+};
+
+export const wrongUserEmailSigninData: IUserSignin = {
+  login: 'gol11eieiei1@gmail.com',
+  password: '00000000',
+};
+
+export const wrongUserUsernameSigninData: IUserSignin = {
+  login: 'golo',
+  password: '00000000',
+};
+
+export const wrongUserPasswordSigninData: IUserSignin = {
+  login: 'golo',
+  password: '01000000',
 };
