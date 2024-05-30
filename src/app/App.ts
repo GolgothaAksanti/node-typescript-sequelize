@@ -1,5 +1,4 @@
 import express, { Application, Request, Response } from 'express';
-import bodyParser from 'body-parser';
 import morgan from 'morgan';
 
 import Base from '@src/core/base/Base';
@@ -21,8 +20,6 @@ class App extends Base {
   private initMiddlewares(): void {
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
-    // this.app.use(bodyParser.json());
-    // this.app.use(bodyParser.urlencoded({ extended: false, limit: '500mb' }));
     this.app.use(morgan('dev'));
     this.app.use(morgan('combined', { stream: httpLogStream }));
   }
