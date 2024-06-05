@@ -18,7 +18,10 @@ const config: Config = {
       statements: 0,
     },
   },
-  moduleNameMapper: { 'src/(.*)': '<rootDir>/src/$1' },
+  // moduleNameMapper: { 'src/(.*)$': '<rootDir>/src/$1' },
+  moduleNameMapper: {
+    '^@src/(.*)$': '<rootDir>/src/$1',
+  },
   coveragePathIgnorePatterns: ['src/database/jobs'],
 };
 

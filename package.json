@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --verbose",
     "dev": "nodemon",
     "db:create": "npx sequelize db:create",
     "db:drop": "npx sequelize db:drop",
@@ -19,6 +19,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@intelika/swagger-theme": "^1.0.4",
     "@types/sequelize": "^4.28.20",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
@@ -27,6 +28,8 @@
     "morgan": "^1.9.9",
     "mysql2": "^3.9.7",
     "sequelize": "^6.37.3",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
     "ts-node": "^10.9.2",
     "winston": "^3.13.0"
   },

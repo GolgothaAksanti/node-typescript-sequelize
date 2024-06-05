@@ -1,4 +1,7 @@
 import express, { Application, Request, Response } from 'express';
+import swaggerJsdoc from 'swagger-jsdoc';
+import swaggerUi from 'swagger-ui-express';
+import { getThemeSync } from '@intelika/swagger-theme';
 import morgan from 'morgan';
 
 import Base from '@src/core/base/Base';
@@ -14,6 +17,7 @@ class App extends Base {
     this.app = express();
     this.initMiddlewares();
     this.initRoutes(routes);
+    this.initSwagger();
     this.initDefaultRoutes();
   }
 
@@ -47,6 +51,17 @@ class App extends Base {
       Util.logger.error(this.INVALID_ROUTE);
       return this.responseHandler(res, this.NOT_FOUND_CODE, this.INVALID_ROUTE);
     });
+  }
+
+  private initSwagger(): void {
+    const specs = swaggerJsdoc(Util.swaggerOptions);
+    this.app.use(
+      '/api-docs',
+      swaggerUi.serve,
+      swaggerUi.setup(specs, {
+        customCss: getThemeSync().toString(),
+      })
+    );
   }
 
   listen(): void {
