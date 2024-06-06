@@ -15,13 +15,13 @@ const sequelize = new Sequelize(
   }
 );
 
-sequelize
-  .sync({ force: false })
-  .then(() => {
-    console.log('tables sync successfully');
-  })
-  .catch(error => {
-    console.log('Error sync tables', error);
-  });
+// sequelize
+//   .sync({ force: false })
+//   .then(() => {
+//     console.log('tables sync successfully');
+//   })
+//   .catch(error => {
+//     console.log('Error sync tables', error);
+//   });
 
 export { sequelize };

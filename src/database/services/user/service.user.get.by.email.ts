@@ -1,8 +1,9 @@
 import { db } from '@src/database/models';
+import User from '@src/database/models/User';
 import BaseService from '@src/database/system/base';
 
 class GetUserByEmailService extends BaseService {
-  protected async transaction(email: string): Promise<any> {
+  protected async transaction(email: string): Promise<User | null> {
     const user = await db.User.findOne({
       where: { email },
       raw: true,

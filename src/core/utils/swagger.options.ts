@@ -27,7 +27,7 @@ export const swaggerOptions: Options = {
     },
     servers: [
       {
-        url: 'http://localhost:4001',
+        url: 'https://www.example.com',
         description: 'API Server Production',
       },
       {

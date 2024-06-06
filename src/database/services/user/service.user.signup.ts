@@ -6,7 +6,7 @@ import User, {
 import BaseService from '@src/database/system/base';
 
 class UserSignupService extends BaseService {
-  protected async transaction(data: UserAttributes): Promise<any> {
+  protected async transaction(data: UserAttributes): Promise<User | null> {
     const salt = this.Password.salt();
     const password = this.Password.hash(data.password as string, salt);
 

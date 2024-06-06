@@ -1,0 +1,145 @@
+openapi: 3.0.0
+info:
+  title: Post API
+  version: 1.0.0
+components:
+  schemas:
+    Post:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+    UpdatePost:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+        image_url:
+          type: string
+        image_id:
+          type: string
+        status:
+          type: number
+paths:
+  /api/post:
+    post:
+      tags:
+        - Post
+      summary: Create a new post
+      operationId: createPost
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Post'
+      responses:
+        '201':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+    get:
+      tags:
+        - Post
+      summary: Get all posts
+      operationId: getPosts
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Post'
+  /api/post/{postId}:
+    get:
+      tags:
+        - Post
+      summary: Get a post by Id
+      operationId: getPostById
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the post to get
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+        '400':
+          description: Product not found
+    put:
+      tags:
+        - Post
+      summary: Update a post
+      operationId: updatePost
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: id of the post to update
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePost'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdatePost'
+    delete:
+      tags:
+        - Post
+      summary: delete a post
+      operationId: deletePost
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: id of the post to delete
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+  /api/post/user:
+    get:
+      tags:
+        - Post
+      summary: Get a post by user
+      operationId: getPostByUser
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+        '400':
+          description: Product not found

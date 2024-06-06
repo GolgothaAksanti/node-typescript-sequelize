@@ -31,15 +31,15 @@ module.exports = {
       },
       image_url: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       image_id: {
         type: Sequelize.STRING(128),
-        allowNull: false,
+        allowNull: true,
       },
       slug: {
         type: Sequelize.STRING(128),
-        allowNull: false,
+        allowNull: true,
       },
       status: {
         type: Sequelize.TINYINT,

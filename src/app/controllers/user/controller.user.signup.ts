@@ -10,8 +10,6 @@ class CreateUserController extends BaseController {
   ): Promise<void | any> {
     const body: UserAttributes = req.body;
 
-    console.log({ body });
-
     const user = await this.Service.UserServices.UserSignup.call(body);
 
     if (!user) {
