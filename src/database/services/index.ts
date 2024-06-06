@@ -1,5 +1,6 @@
 import UserServices from './user';
+import PostServices from './post';
 
-const Service = { UserServices };
+const Service = { UserServices, PostServices };
 
 export default Service;

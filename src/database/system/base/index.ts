@@ -6,7 +6,7 @@ import { IPage, IPagination } from '@src/types/db';
 const { Password } = Util;
 
 abstract class BaseService {
-  protected database
+  protected database;
 
   protected op: typeof Op;
   protected sequelize: typeof Sequelize;
@@ -27,7 +27,7 @@ abstract class BaseService {
     try {
       return await this.transaction(data);
     } catch (err: unknown) {
-      // console.log(err);
+      console.log({ err });
       return null;
     }
   }

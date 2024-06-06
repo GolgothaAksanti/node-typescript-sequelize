@@ -5,17 +5,19 @@ import {
   CreationOptional,
   ForeignKey,
 } from 'sequelize';
+
 import { sequelize } from '../system/db';
+import { generateSlug } from '@src/core/utils/generate.slug';
 
 export interface PostAttributes {
-  postId: string;
-  title: string;
-  description: string;
-  category: string;
-  image_url: string;
-  image_id: string;
-  userId: string;
-  slug: string;
+  postId?: string;
+  title?: string;
+  description?: string;
+  category?: string;
+  image_url?: string;
+  image_id?: string;
+  userId?: string;
+  slug?: string;
   status?: number;
   createdAt?: Date;
   updatedAt?: Date;
@@ -33,9 +35,9 @@ class Post
   declare title: string;
   declare description: string;
   declare category: string;
-  declare image_url: string;
-  declare image_id: string;
-  declare slug: string;
+  declare image_url: CreationOptional<string>;
+  declare image_id: CreationOptional<string>;
+  declare slug: CreationOptional<string>;
   declare status: CreationOptional<number>;
   declare readonly createdAt: CreationOptional<Date>;
   declare readonly updatedAt: CreationOptional<Date>;
@@ -71,15 +73,15 @@ Post.init(
     },
     image_url: {
       type: new DataTypes.STRING(),
-      allowNull: false,
+      allowNull: true,
     },
     image_id: {
       type: new DataTypes.STRING(128),
-      allowNull: false,
+      allowNull: true,
     },
     slug: {
       type: new DataTypes.STRING(128),
-      allowNull: false,
+      allowNull: true,
     },
     status: {
       type: DataTypes.TINYINT(),
@@ -100,6 +102,13 @@ Post.init(
   {
     sequelize,
     tableName: 'posts',
+    hooks: {
+      beforeCreate(post: Post) {
+        if (!post.slug) {
+          post.slug = generateSlug(post.title);
+        }
+      },
+    },
   }
 );
 
